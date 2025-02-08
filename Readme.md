@@ -1,6 +1,6 @@
 # Blazor_Authentication_JwtToken
 
-![robinhood1995](Favicon.ico)
+![robinhood1995](Client/wwwroot/favicon.ico)
 
 This Application is a starter for blazor and the use of JWT Token authentication
 
