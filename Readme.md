@@ -47,7 +47,7 @@ We have the connection set for SQL Express server.
 
 ### Bugs and feature requests
 
-Have a bug or a feature request? Please first search for existing and closed issues. If your problem or idea is not addressed yet, [please open a new issue](https://github.com/SFLServicesLLC/KSTool/issues/new).
+Have a bug or a feature request? Please first search for existing and closed issues. If your problem or idea is not addressed yet, [please open a new issue](https://github.com/robinhood1995/Blazor_Authentication_JwtToken/issues).
 
 ### Documentation
 
