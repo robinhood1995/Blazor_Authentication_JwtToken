@@ -4,9 +4,9 @@
 
 This Application is a starter for blazor and the use of JWT Token authentication
 
-# .NET 8 Core Required
+# .NET 9 Core Required
 
-- v8 .Net Core
+- DotNet Core 9
 
 ---------------------------------------
 
@@ -23,7 +23,7 @@ SQL Express
 
 ## Versions
 
-- [1.0.1](VERSION)
+- [1.1.0](VERSION)
 
 ## Featuring
 

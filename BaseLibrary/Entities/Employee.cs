@@ -3,7 +3,7 @@ namespace BaseLibrary.Entities
 {
     public class Employee
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         
         public string? Name { get; set; }
 
@@ -23,19 +23,20 @@ namespace BaseLibrary.Entities
 
         public string? ZipCode { get; set; }
 
+        public Guid? TenantId { get; set; }
+
         //Relationship : Many to One
         public GeneralDepartment? GeneralDepartment { get; set; }
-        public int GeneralDepartmentId { get; set; }
+        public Guid GeneralDepartmentId { get; set; }
 
         public Department? Department { get; set; }
-        public int DepartmentId { get; set; }
+        public Guid DepartmentId { get; set; }
 
         public Branch? Branch { get; set; }
-        public int BranchId { get; set; }
+        public Guid BranchId { get; set; }
 
         public City? City { get; set; }
-        public int CityId { get; set; }
-
+        public Guid CityId { get; set; }
 
     }
 }

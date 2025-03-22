@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Scalar.AspNetCore;
 using ServerLibrary.Data;
 using ServerLibrary.Helpers;
 using ServerLibrary.Repositories.Contracts;
@@ -11,8 +12,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddOpenApi("v1");
+//https://stackoverflow.com/questions/79188513/addopenapi-adding-error-response-types-to-all-operations-net-9
+//builder.Services.AddOpenApiCustom();
 
 builder.Services.Configure<JwtSection>(builder.Configuration.GetSection("JwtSection"));
 var jwtSection = builder.Configuration.GetSection(nameof(JwtSection)).Get<JwtSection>();
@@ -57,12 +59,30 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+app.MapStaticAssets();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.MapOpenApi();
+    app.UseExceptionHandler("/error-development");
 }
+
+if (app.Environment.IsProduction())
+{
+    app.MapOpenApi();
+    app.UseExceptionHandler("/error");
+}
+
+//Configure Endpoint for Prod or Dev
+app.MapScalarApiReference(options =>
+{
+    options
+        .WithTitle("SFL Services LLC")
+        .WithDownloadButton(true)
+        .WithTheme(ScalarTheme.Purple)
+        .WithDefaultHttpClient(ScalarTarget.JavaScript, ScalarClient.Axios);
+});
 
 app.UseHttpsRedirection();
 

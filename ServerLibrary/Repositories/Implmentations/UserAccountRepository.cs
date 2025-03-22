@@ -59,7 +59,7 @@ namespace ServerLibrary.Repositories.Implmentations
         {
             if (user is null) return new LoginResponse(false, "Model is empty");
 
-            var applicationUser = await FindUserByEmail(user.Email);
+            var applicationUser = await FindUserByEmail(user.Email!);
             if (applicationUser is null) return new LoginResponse(false, "User not found");
 
             //Verify Password
@@ -106,20 +106,20 @@ namespace ServerLibrary.Repositories.Implmentations
                 issuer: config.Value.Issuer,
                 audience: config.Value.Audience,
                 claims: userClaims,
-                expires: DateTime.Now.AddDays(1),
+                expires: DateTime.Now.AddMinutes(5),
                 signingCredentials: credentials
                 );
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        private async Task<UserRole> FindUserRole(int userId) => await appDbContext.UserRoles.FirstOrDefaultAsync(_ => _.UserId == userId);
+        private async Task<UserRole> FindUserRole(Guid userId) => await appDbContext.UserRoles.FirstOrDefaultAsync(_ => _.UserId == userId);
 
-        private async Task<SystemRole> FindRoleName(int roleId) => await appDbContext.SystemRoles.FirstOrDefaultAsync(_ => _.Id == roleId);
+        private async Task<SystemRole> FindRoleName(Guid roleId) => await appDbContext.SystemRoles.FirstOrDefaultAsync(_ => _.Id == roleId);
 
         private static string GenerateRefreshToken() => Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
 
         private async Task<ApplicationUser> FindUserByEmail(string email) =>
-            await appDbContext.ApplicationUsers.FirstOrDefaultAsync(_ => _.Email!.ToLower()!.Equals(email!.ToLower()));
+            await appDbContext.ApplicationUsers.FirstOrDefaultAsync(_ => _.Email!.ToLower().Equals(email!.ToLower()));
 
         private async Task<T> AddToDatabase<T>(T model)
         {
@@ -130,7 +130,7 @@ namespace ServerLibrary.Repositories.Implmentations
 
         public async Task<LoginResponse> RefreshTokenAsync(RefreshToken token)
         {
-            if (token is null) return new LoginResponse(false, "Model is  empty");
+            if (token is null) return new LoginResponse(false, "Model is empty");
 
             var findToken = await appDbContext.RefreshTokenInfos.FirstOrDefaultAsync(_ => _.Token!.Equals(token.Token));
             if (findToken is null) return new LoginResponse(false, "Refresh token is required");
