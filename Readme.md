@@ -42,10 +42,8 @@ SQL Express
 
 ### Implementing
 
--   You will have to run Update-Database to create the database.
--   We have the connection set for SQL Express server.
-  - Change the appsettings.json file for the SQL server connection
-    
+You will have to run a migration and also update database.
+We have the connection set for SQL Express server.
 
 ### Bugs and feature requests
 
